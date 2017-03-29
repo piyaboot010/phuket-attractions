@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <meta charset="UTF-8">
+  <title>Phuket Attractions</title>
+  <script src="http://s.codepen.io/assets/libs/modernizr.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+
+  
+      <style>
+      /* NOTE: The styles were added inline because Prefixfree needs access to your styles and they must be inlined if they are on local disk! */
+      /*
+  Docs at http://http://simpleweatherjs.com
+
+  Look inspired by http://www.degreees.com/
+  Used for demo purposes.
+
+  Weather icon font from http://fonts.artill.de/collection/artill-weather-icons
+
+  DO NOT hotlink the assets/font included in this demo. If you wish to use the same font icon then download it to your local assets at the link above. If you use the links below odds are at some point they will be removed and your version will break.
+*/
+
+@font-face {
+    font-family: 'weather';
+    src: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/93/artill_clean_icons-webfont.eot');
+    src: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/93/artill_clean_icons-webfont.eot?#iefix') format('embedded-opentype'),
+         url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/93/artill_clean_icons-webfont.woff') format('woff'),
+         url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/93/artill_clean_icons-webfont.ttf') format('truetype'),
+         url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/93/artill_clean_icons-webfont.svg#artill_clean_weather_iconsRg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+html {
+  width: 100%;
+  height: 100%;
+  
+  background-size: cover;
+}
+
+body {
+  padding: 45px 0;
+  font: 13px 'Open Sans', "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+}
+
+#weather {
+position: relative; 
+  		z-index: 1; 
+  width: 500px;
+  margin: 0px auto;
+  text-align: center;
+  text-transform: uppercase;
+  
+}
+
+i {
+position: relative; 
+  		z-index: 1; 
+  color: ##4A4A4B;
+  font-family: weather;
+  font-size: 80px;
+  font-weight: normal;
+  font-style: normal;
+  line-height: 1.0;
+  text-transform: none;
+}
+
+.icon-0:before { content: ":"; }
+.icon-1:before { content: "p"; }
+.icon-2:before { content: "S"; }
+.icon-3:before { content: "Q"; }
+.icon-4:before { content: "S"; }
+.icon-5:before { content: "W"; }
+.icon-6:before { content: "W"; }
+.icon-7:before { content: "W"; }
+.icon-8:before { content: "W"; }
+.icon-9:before { content: "I"; }
+.icon-10:before { content: "W"; }
+.icon-11:before { content: "I"; }
+.icon-12:before { content: "I"; }
+.icon-13:before { content: "I"; }
+.icon-14:before { content: "I"; }
+.icon-15:before { content: "W"; }
+.icon-16:before { content: "I"; }
+.icon-17:before { content: "W"; }
+.icon-18:before { content: "U"; }
+.icon-19:before { content: "Z"; }
+.icon-20:before { content: "Z"; }
+.icon-21:before { content: "Z"; }
+.icon-22:before { content: "Z"; }
+.icon-23:before { content: "Z"; }
+.icon-24:before { content: "E"; }
+.icon-25:before { content: "E"; }
+.icon-26:before { content: "3"; }
+.icon-27:before { content: "a"; }
+.icon-28:before { content: "A"; }
+.icon-29:before { content: "a"; }
+.icon-30:before { content: "A"; }
+.icon-31:before { content: "6"; }
+.icon-32:before { content: "1"; }
+.icon-33:before { content: "6"; }
+.icon-34:before { content: "1"; }
+.icon-35:before { content: "W"; }
+.icon-36:before { content: "1"; }
+.icon-37:before { content: "S"; }
+.icon-38:before { content: "S"; }
+.icon-39:before { content: "S"; }
+.icon-40:before { content: "M"; }
+.icon-41:before { content: "W"; }
+.icon-42:before { content: "I"; }
+.icon-43:before { content: "W"; }
+.icon-44:before { content: "a"; }
+.icon-45:before { content: "S"; }
+.icon-46:before { content: "U"; }
+.icon-47:before { content: "S"; }
+
+#weather h2 {
+position: relative; 
+  		z-index: 1; 
+  margin: 0 0 8px;
+  color: ##4A4A4B;
+  font-size: 50px;
+  font-weight: 300;
+  text-align: center;
+  text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+#weather ul {
+  margin: 0;
+  padding: 0;
+}
+
+#weather li {
+  background: #fff;
+  background: rgba(255,255,255,0.90);
+  padding: 20px;
+  display: inline-block;
+  border-radius: 5px;
+}
+
+#weather .currently {
+  margin: 0 20px;
+}
+
+#map {
+        height: 100%;
+        width: 100%; 
+  		position:absolute; 
+  		top: 0; 
+  		left: 0; 
+  		z-index: 0;
+      }
+      
+      	#head { 
+  		position: relative; 
+  		z-index: 1; /* The z-index should be higher than Google Maps */
+  		width: 600px;
+  		margin: 700px auto 0;
+  		padding: 1px;
+  		background: none;
+  		height: auto;
+  		opacity: 1; /* Set the opacity for a slightly transparent Google Form */ 
+  		color: black;
+	}
+      body,h3 {font-family: "Raleway", sans-serif}
+    </style>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
+
+</head>
+
+<body>
+  <!-- Docs at http://http://simpleweatherjs.com -->
+<div id="weather"></div>
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery.simpleWeather/3.1.0/jquery.simpleWeather.min.js'></script>
+
+    <script src="js/index.js"></script>
+    
+<div id="head">
+	<div class="w3-display-center">
+	<h3 class="w3-jumbo w3-animate-top">Phuket Attractions</h3>
+	</div>
+</div>
+
+<div id="map"></div>
+    <script>
+
+      // The following example creates complex markers to indicate beaches near
+      // Sydney, NSW, Australia. Note that the anchor is set to (0,32) to correspond
+      // to the base of the flagpole.
+
+      // The following example creates complex markers to indicate beaches near
+// Sydney, NSW, Australia. Note that the anchor is set to (0,32) to correspond
+// to the base of the flagpole.
+
+function initMap() {
+  var map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 11,
+    center: {
+      lat: 7.97,
+      lng: 98.45
+    }
+  });
+
+  setMarkers(map);
+}
+
+// Data for the markers consisting of a name, a LatLng and a zIndex for the
+// order in which these markers should display on top of each other.
+var beaches = [
+  	['Laem Ka Beach', 7.778455, 98.337573, 14],
+  	['Patong Beach', 7.894654, 98.294803, 13],
+  	['Kammala Beach', 7.956704, 98.283025, 12],
+  	['Surin Beach', 7.975459, 98.278422, 11],
+  	['Dream Beach', 8.027760, 98.289023, 10],
+  	['Naithon Beach', 8.057929, 98.277620, 9],
+  	['Nai Yang Beach', 8.089452, 98.297287, 8],
+  	['Mai Khao Beach', 8.133487, 98.299117, 7],
+  	['Yanui Beach', 7.767567, 98.306232, 6],
+  	['Nai Harn Beach', 7.774194, 98.306991, 5],
+  	['Kata Noi Beach', 7.806689, 98.298830, 4]
+  	['Кata Beach', 7.820820, 98.297387, 3],
+  	['Karon Beach', 7.843801, 98.293597, 2],
+  	['Laem Singh Beach', 7.968612, 98.279700, 1]
+];
+
+var temples = [
+	['The Big Buddha', 7.827544, 98.312732, 3],
+  	['Wat Chalong', 7.846764, 98.336675, 2],
+  	['Wat Phra Nang Sang', 8.026660, 98.332627, 1]
+];
+
+
+var shoppings = [
+	['CentralFestival Phuket', 7.891734, 98.368236, 5],
+	['Jungceylon', 7.892040, 98.298830, 4],
+  	['Big C Supercenter', 7.895535, 98.367473, 3],
+  	['TESCO Lotus Extra Phuket', 7.904257, 98.369264, 2],
+  	['Villa Market - Chalong Phuket', 7.824687, 98.339459, 1]
+];
+
+
+function setMarkers(map) {
+  // Adds markers to the map.
+
+  // Marker sizes are expressed as a Size of X,Y where the origin of the image
+  // (0,0) is located in the top left of the image.
+
+  // Origins, anchor positions and coordinates of the marker increase in the X
+  // direction to the right and in the Y direction down.
+  var beachimg = {
+    url: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
+    // This marker is 20 pixels wide by 32 pixels high.
+    size: new google.maps.Size(20, 32),
+    // The origin for this image is (0, 0).
+    origin: new google.maps.Point(0, 0),
+    // The anchor for this image is the base of the flagpole at (0, 32).
+    anchor: new google.maps.Point(0, 32)
+  };
+  
+  var templeimg = {
+    url: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
+    // This marker is 20 pixels wide by 32 pixels high.
+    size: new google.maps.Size(20, 32),
+    // The origin for this image is (0, 0).
+    origin: new google.maps.Point(0, 0),
+    // The anchor for this image is the base of the flagpole at (0, 32).
+    anchor: new google.maps.Point(0, 32)
+  };
+  
+  // Shapes define the clickable region of the icon. The type defines an HTML
+  // <area> element 'poly' which traces out a polygon as a series of X,Y points.
+  // The final coordinate closes the poly by connecting to the first coordinate.
+  var shape = {
+    coords: [1, 1, 1, 20, 18, 20, 18, 1],
+    type: 'poly'
+  };
+  
+  for (var i = 0; i < beaches.length; i++) {
+    var beach = beaches[i];
+    var marker = new google.maps.Marker({
+      position: {
+        lat: beach[1],
+        lng: beach[2]
+      },
+      map: map,
+      icon: beachimg,
+      shape: shape,
+      title: beach[0],
+      zIndex: beach[3]
+    });
+  }
+  
+  for (var i = 0; i < temples.length; i++) {
+    var temple = temples[i];
+    var marker = new google.maps.Marker({
+      position: {
+        lat: temple[1],
+        lng: temple[2]
+      },
+      map: map,
+      icon: templeimg,
+      shape: shape,
+      title: temple[0],
+      zIndex: temple[3]
+    });
+  }
+  
+    for (var i = 0; i < temples.length; i++) {
+    var shopping = shoppings[i];
+    var marker = new google.maps.Marker({
+      position: {
+        lat: shopping[1],
+        lng: shopping[2]
+      },
+      map: map,
+      icon: templeimg,
+      shape: shape,
+      title: shopping[0],
+      zIndex: shopping[3]
+    });
+  }
+
+
+}
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDxugf1Fy-T-97WWFCMOr4t-NDX4uu6yA8&callback=initMap">
+    </script>
+    
+    
+
+</body>
+</html>
